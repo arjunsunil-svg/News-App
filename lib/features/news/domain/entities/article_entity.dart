@@ -7,7 +7,11 @@ class ArticleEntity {
     required this.author,
     required this.publishedAt,
     required this.url,
+    required this.content,
+    required this.lang,
     required this.categories,
+    required this.sourceUrl,
+    required this.sourceCountry,
   });
   final String id;
   final String title;
@@ -16,5 +20,9 @@ class ArticleEntity {
   final String author;
   final DateTime publishedAt;
   final String url;
+  final String content;
+  final String lang;
   final List<String> categories;
+  final String sourceUrl;
+  final String sourceCountry;
 }

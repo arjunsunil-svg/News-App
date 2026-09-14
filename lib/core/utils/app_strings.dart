@@ -18,5 +18,16 @@ abstract final class AppStrings {
   static const String noSearchResults =
       'No articles match your search.';
 
+  static const String articleDetailsTitle = 'Article';
+
+  static const String sourceLabel = 'Source';
+
+  static const String publishedLabel = 'Published';
+
+  static const String categoriesLabel = 'Categories';
+
+  static const String noContentAvailable =
+      'No additional content available for this article.';
+
   static const String allCategoriesLabel = 'All';
 }

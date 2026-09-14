@@ -179,6 +179,12 @@ class NewsScreen extends GetView<NewsController> {
                       onBookmarkPressed: () {
                         controller.toggleBookmark(article.id);
                       },
+                      onTap: () {
+                        Get.toNamed(
+                          AppRoutes.articleDetails,
+                          arguments: article,
+                        );
+                      },
                     );
                   });
                 },
