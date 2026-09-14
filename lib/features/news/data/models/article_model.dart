@@ -9,10 +9,13 @@ class ArticleModel extends ArticleEntity {
     required super.author,
     required super.publishedAt,
     required super.url,
+    required super.categories,
   });
 
   factory ArticleModel.fromGraphQL(Map<String, dynamic> json) {
     final source = json['source'] as Map<String, dynamic>;
+
+    final categoriesRaw = json['categories'] as List<dynamic>? ?? const [];
 
     return ArticleModel(
       id: json['id'] as String,
@@ -22,6 +25,7 @@ class ArticleModel extends ArticleEntity {
       author: source['name'] as String,
       publishedAt: DateTime.parse(json['publishedAt'] as String),
       url: json['url'] as String,
+      categories: categoriesRaw.map((e) => e as String).toList(),
     );
   }
 }

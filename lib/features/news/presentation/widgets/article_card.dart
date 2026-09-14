@@ -18,11 +18,22 @@ class ArticleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: AppColors.surface,
+    return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: 16,
         vertical: 8,
+      ),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.divider, width: 1),
+        boxShadow: const [
+          BoxShadow(
+            color: AppColors.shadow,
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -38,15 +49,20 @@ class ArticleCard extends StatelessWidget {
                     style: AppTextStyles.title,
                   ),
                 ),
-                IconButton(
-                  onPressed: onBookmarkPressed,
-                  icon: Icon(
-                    isBookmarked
-                        ? Icons.bookmark
-                        : Icons.bookmark_border,
-                    color: isBookmarked
-                        ? AppColors.primary
-                        : AppColors.textSecondary,
+                const SizedBox(width: 8),
+                InkWell(
+                  onTap: onBookmarkPressed,
+                  borderRadius: BorderRadius.circular(20),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Icon(
+                      isBookmarked
+                          ? Icons.bookmark
+                          : Icons.bookmark_border,
+                      color: isBookmarked
+                          ? AppColors.bookmarkActive
+                          : AppColors.bookmarkInactive,
+                    ),
                   ),
                 ),
               ],
@@ -54,12 +70,51 @@ class ArticleCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               article.description,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
               style: AppTextStyles.description,
             ),
-            const SizedBox(height: 12),
-            Text(
-              article.author,
-              style: AppTextStyles.metadata,
+            if (article.categories.isNotEmpty) ...[
+              const SizedBox(height: 10),
+              Wrap(
+                spacing: 6,
+                runSpacing: 6,
+                children: article.categories.map((category) {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.background,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: AppColors.divider),
+                    ),
+                    child: Text(
+                      category,
+                      style: AppTextStyles.metadata,
+                    ),
+                  );
+                }).toList(),
+              ),
+            ],
+            const SizedBox(height: 14),
+            Row(
+              children: [
+                Container(
+                  width: 6,
+                  height: 6,
+                  decoration: const BoxDecoration(
+                    color: AppColors.accent,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  article.author,
+                  style: AppTextStyles.metadata,
+                ),
+              ],
             ),
           ],
         ),

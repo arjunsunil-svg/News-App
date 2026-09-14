@@ -31,29 +31,91 @@ class NewsScreen extends GetView<NewsController> {
           Padding(
             padding: const EdgeInsets.fromLTRB(
               16,
-              12,
+              14,
               16,
-              8,
+              10,
             ),
             child: TextField(
               onChanged: controller.search,
+              style: const TextStyle(color: AppColors.textPrimary),
+              cursorColor: AppColors.primary,
               decoration: InputDecoration(
                 hintText: AppStrings.searchHint,
-                prefixIcon: const Icon(Icons.search),
+                hintStyle: const TextStyle(color: AppColors.textSecondary),
+                prefixIcon: const Icon(
+                  Icons.search,
+                  color: AppColors.accent,
+                ),
                 filled: true,
                 fillColor: AppColors.surface,
+                contentPadding: const EdgeInsets.symmetric(vertical: 14),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: const BorderSide(color: AppColors.divider),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: const BorderSide(color: AppColors.divider),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: const BorderSide(
+                    color: AppColors.primary,
+                    width: 1.5,
+                  ),
                 ),
               ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+            child: SizedBox(
+              height: 36,
+              child: Obx(() {
+                final categories = controller.categories;
+                final selected = controller.selectedCategory.value;
+
+                return ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categories.length,
+                  separatorBuilder: (_, __) => const SizedBox(width: 8),
+                  itemBuilder: (context, index) {
+                    final category = categories[index];
+                    final isSelected = category == selected;
+
+                    return ChoiceChip(
+                      label: Text(category),
+                      selected: isSelected,
+                      onSelected: (_) => controller.selectCategory(category),
+                      showCheckmark: false,
+                      labelStyle: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: isSelected
+                            ? AppColors.surface
+                            : AppColors.textPrimary,
+                      ),
+                      backgroundColor: AppColors.surface,
+                      selectedColor: AppColors.primary,
+                      side: BorderSide(
+                        color: isSelected
+                            ? AppColors.primary
+                            : AppColors.divider,
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                    );
+                  },
+                );
+              }),
             ),
           ),
           Expanded(
             child: Obx(() {
               if (controller.isLoading.value) {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    color: AppColors.primary,
+                  ),
                 );
               }
 
@@ -62,11 +124,17 @@ class NewsScreen extends GetView<NewsController> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      const Icon(
+                        Icons.wifi_off_rounded,
+                        size: 40,
+                        color: AppColors.accent,
+                      ),
+                      const SizedBox(height: 10),
                       Text(
                         AppStrings.errorLoadingNews,
                         style: AppTextStyles.error,
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: controller.loadNews,
                         child: const Text(AppStrings.retry),
@@ -78,26 +146,41 @@ class NewsScreen extends GetView<NewsController> {
 
               if (controller.articles.isEmpty) {
                 return Center(
-                  child: Text(
-                    controller.searchQuery.value.isEmpty
-                        ? AppStrings.noArticles
-                        : AppStrings.noSearchResults,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.article_outlined,
+                        size: 40,
+                        color: AppColors.bookmarkInactive,
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        controller.searchQuery.value.isEmpty
+                            ? AppStrings.noArticles
+                            : AppStrings.noSearchResults,
+                        style: AppTextStyles.emptyState,
+                      ),
+                    ],
                   ),
                 );
               }
 
               return ListView.builder(
+                padding: const EdgeInsets.only(bottom: 12),
                 itemCount: controller.articles.length,
                 itemBuilder: (context, index) {
                   final article = controller.articles[index];
 
-                  return ArticleCard(
-                    article: article,
-                    isBookmarked: controller.isBookmarked(article.id),
-                    onBookmarkPressed: () {
-                      controller.toggleBookmark(article.id);
-                    },
-                  );
+                  return Obx(() {
+                    return ArticleCard(
+                      article: article,
+                      isBookmarked: controller.isBookmarked(article.id),
+                      onBookmarkPressed: () {
+                        controller.toggleBookmark(article.id);
+                      },
+                    );
+                  });
                 },
               );
             }),

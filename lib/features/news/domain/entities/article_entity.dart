@@ -6,7 +6,8 @@ class ArticleEntity {
     required this.imageUrl,
     required this.author,
     required this.publishedAt,
-    required this.url
+    required this.url,
+    required this.categories,
   });
   final String id;
   final String title;
@@ -15,4 +16,5 @@ class ArticleEntity {
   final String author;
   final DateTime publishedAt;
   final String url;
+  final List<String> categories;
 }

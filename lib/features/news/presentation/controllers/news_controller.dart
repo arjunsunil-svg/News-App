@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../../../core/utils/app_strings.dart';
 import '../../domain/entities/article_entity.dart';
 import '../../domain/usecases/bookmark_article.dart';
 import '../../domain/usecases/get_bookmarked_ids.dart';
@@ -38,6 +39,8 @@ class NewsController extends GetxController {
 
   final searchQuery = ''.obs;
 
+  final selectedCategory = AppStrings.allCategoriesLabel.obs;
+
   final errorMessage = RxnString();
 
   @override
@@ -48,6 +51,18 @@ class NewsController extends GetxController {
     loadNews();
   }
 
+  List<String> get categories {
+    final unique = <String>{};
+
+    for (final article in allArticles) {
+      unique.addAll(article.categories);
+    }
+
+    final sorted = unique.toList()..sort();
+
+    return [AppStrings.allCategoriesLabel, ...sorted];
+  }
+
   Future<void> loadNews() async {
     isLoading.value = true;
     errorMessage.value = null;
@@ -56,7 +71,7 @@ class NewsController extends GetxController {
       final result = await _getNews();
 
       allArticles.assignAll(result);
-      articles.assignAll(result);
+      _applyFilters();
     } catch (e) {
       errorMessage.value = e.toString();
     } finally {
@@ -66,17 +81,27 @@ class NewsController extends GetxController {
 
   void search(String query) {
     searchQuery.value = query;
+    _applyFilters();
+  }
 
-    final normalizedQuery = query.trim().toLowerCase();
+  void selectCategory(String category) {
+    selectedCategory.value = category;
+    _applyFilters();
+  }
 
-    if (normalizedQuery.isEmpty) {
-      articles.assignAll(allArticles);
-      return;
-    }
+  void _applyFilters() {
+    final normalizedQuery = searchQuery.value.trim().toLowerCase();
 
     final results = allArticles.where((article) {
-      return article.title.toLowerCase().contains(normalizedQuery) ||
+      final matchesCategory = selectedCategory.value ==
+          AppStrings.allCategoriesLabel ||
+          article.categories.contains(selectedCategory.value);
+
+      final matchesSearch = normalizedQuery.isEmpty ||
+          article.title.toLowerCase().contains(normalizedQuery) ||
           article.description.toLowerCase().contains(normalizedQuery);
+
+      return matchesCategory && matchesSearch;
     }).toList();
 
     articles.assignAll(results);

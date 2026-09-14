@@ -9,6 +9,7 @@
       "image": "https://www.europesays.com/wp-content/uploads/2026/09/c8db5853cf13-bolger-yard.webp",
       "publishedAt": "2026-09-08T18:49:31Z",
       "lang": "en",
+      "categories": ["Sports"],
       "source": {
         "id": "ed23d65928efaec6669dd2212a773d9f",
         "name": "EUROPE SAYS",
@@ -25,6 +26,7 @@
       "image": "https://www.masslive.com/resizer/v2/XP75JT5KTBG63OE52CXG6K2ZRQ.jpg?auth=c522230712296034b0b8b42248797cf85426cf02b6629c8993322c4920c80dd0&width=1280&smart=true&quality=90",
       "publishedAt": "2026-09-08T18:47:16Z",
       "lang": "en",
+      "categories": ["Crime"],
       "source": {
         "id": "e185a9e522f5881b82bc4bd40cbea8e0",
         "name": "MassLive",
@@ -41,6 +43,7 @@
       "image": "https://www.bgr.com/img/gallery/google-pixel-11-pro-xl-review-the-best-with-an-asterisk/l-intro-1788892738.jpg",
       "publishedAt": "2026-09-08T18:43:28Z",
       "lang": "en",
+      "categories": ["Technology", "Mobile"],
       "source": {
         "id": "b98becfda029f124cf65538c8af36d20",
         "name": "BGR",
@@ -57,6 +60,7 @@
       "image": "https://static0.anpoimages.com/wordpress/wp-content/uploads/2026/09/google-wallet-transit.jpg?w=1600&h=900&fit=crop",
       "publishedAt": "2026-09-08T18:27:03Z",
       "lang": "en",
+      "categories": ["Technology"],
       "source": {
         "id": "3855a489b685d9599a636250ed950d3c",
         "name": "Android Police",
@@ -73,6 +77,7 @@
       "image": "https://i.guim.co.uk/img/media/0be792a79d390397c89f84c4dad23ed8ae0f956a/255_0_1477_1181/master/1477.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=6d720878094b564f7174680455812304",
       "publishedAt": "2026-09-08T18:25:01Z",
       "lang": "en",
+      "categories": ["Technology", "Politics"],
       "source": {
         "id": "01558c024928d45cf320f6f75eede787",
         "name": "The Guardian",
@@ -89,6 +94,7 @@
       "image": "https://i.guim.co.uk/img/media/1f45a3e7d126583786f74f68aab87bf0a8ccaaaa/267_0_2667_2135/master/2667.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50&overlay-align=bottom&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=e07d647d3e0380be7d777fa39866aa4c",
       "publishedAt": "2026-09-08T18:21:11Z",
       "lang": "en",
+      "categories": ["Entertainment"],
       "source": {
         "id": "01558c024928d45cf320f6f75eede787",
         "name": "The Guardian",
@@ -105,6 +111,7 @@
       "image": "https://i2-prod.manchestereveningnews.co.uk/article34587682.ece/ALTERNATES/s1200d/0_Coronavirus-Mon-Apr-27-2020.jpg",
       "publishedAt": "2026-09-08T18:18:42Z",
       "lang": "en",
+      "categories": ["Politics", "Technology"],
       "source": {
         "id": "ae2702c2a2dec11fe1079f1a797d178a",
         "name": "Manchester Evening News",
@@ -121,6 +128,7 @@
       "image": "https://www.livemint.com/lm-img/img/2026/09/08/1600x900/logo/Google_DigiPivot_2026_1788891168882_54eb2554-0032-44b2-918b-754141b48c73_1788891179862_bbbcf014-f77d-4393-ae30-6af2f9ee5422_22e80847-8814-4754-9ae7-d23c744b0063_1098cf64-8da9-4b81-8bd1-2a45e7754691_22e80847-8814-4754-9ae7-d23c744b0063_1098cf64-8da9-4b81-8bd1-2a45e7754691_1098cf64-8da9-4b81-8bd1-2a45e7754691_1098cf64-8da9-4b81-8bd1-2a45e7754691.jpg",
       "publishedAt": "2026-09-08T18:18:04Z",
       "lang": "en",
+      "categories": ["Technology", "Business"],
       "source": {
         "id": "3bd4bd306c42647825fa42989624c036",
         "name": "Livemint",
@@ -137,6 +145,7 @@
       "image": "https://media.wired.com/photos/6aa03e5ade01d165fd766963/191:100/w_1280,c_limit/UK-Gave-Apple-Google-Three-Months-To-Block-Child-Nudity-Business-961092282.jpg",
       "publishedAt": "2026-09-08T18:13:26Z",
       "lang": "en",
+      "categories": ["Technology", "Politics"],
       "source": {
         "id": "b683218c3952d77a76b7bda7512f2f6e",
         "name": "WIRED",
@@ -153,6 +162,7 @@
       "image": "https://i.insider.com/6aa04fc39b8974787b1c985e?width=1200&format=jpeg",
       "publishedAt": "2026-09-08T18:05:48Z",
       "lang": "en",
+      "categories": ["Technology", "Business"],
       "source": {
         "id": "458ddf355ab77631d3eb3dd84a0351b4",
         "name": "Business Insider",

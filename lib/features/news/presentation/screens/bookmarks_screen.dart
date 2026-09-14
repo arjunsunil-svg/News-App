@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
+import '../../../../core/utils/app_text_styles.dart';
 import '../controllers/news_controller.dart';
 import '../widgets/article_card.dart';
 
@@ -20,12 +21,28 @@ class BookmarksScreen extends GetView<NewsController> {
       ),
       body: Obx(() {
         if (controller.bookmarkedArticles.isEmpty) {
-          return const Center(
-            child: Text(AppStrings.noBookmarks),
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.bookmark_border,
+                  size: 40,
+                  color: AppColors.bookmarkInactive,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  AppStrings.noBookmarks,
+                  style: AppTextStyles.emptyState,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           );
         }
 
         return ListView.builder(
+          padding: const EdgeInsets.only(top: 8, bottom: 12),
           itemCount: controller.bookmarkedArticles.length,
           itemBuilder: (context, index) {
             final article = controller.bookmarkedArticles[index];

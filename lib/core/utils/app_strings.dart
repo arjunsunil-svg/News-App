@@ -17,4 +17,6 @@ abstract final class AppStrings {
 
   static const String noSearchResults =
       'No articles match your search.';
+
+  static const String allCategoriesLabel = 'All';
 }

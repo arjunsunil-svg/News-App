@@ -10,6 +10,7 @@ abstract final class GraphQLQueries {
         image
         publishedAt
         lang
+        categories
         source {
           id
           name
