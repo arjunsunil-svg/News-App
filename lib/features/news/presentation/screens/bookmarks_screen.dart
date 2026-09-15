@@ -19,6 +19,12 @@ class BookmarksScreen extends GetView<NewsController> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: const Text(AppStrings.bookmarks),
+        leading: _FocusableIconButton(
+          icon: const BackButtonIcon(),
+          onPressed: () => Get.back(),
+          semanticLabel: AppStrings.backButtonSemanticLabel,
+          semanticHint: AppStrings.backButtonSemanticHint,
+        ),
       ),
       body: Obx(() {
         if (controller.bookmarkedArticles.isEmpty) {
@@ -64,6 +70,82 @@ class BookmarksScreen extends GetView<NewsController> {
           },
         );
       }),
+    );
+  }
+}
+
+class _FocusableIconButton extends StatefulWidget {
+  const _FocusableIconButton({
+    required this.icon,
+    required this.onPressed,
+    required this.semanticLabel,
+    required this.semanticHint,
+  });
+
+  final Widget icon;
+  final VoidCallback onPressed;
+  final String semanticLabel;
+  final String semanticHint;
+
+  @override
+  State<_FocusableIconButton> createState() => _FocusableIconButtonState();
+}
+
+class _FocusableIconButtonState extends State<_FocusableIconButton> {
+  final FocusNode _focusNode =
+  FocusNode(debugLabel: 'FocusableIconButtonFocusNode');
+
+  bool _isFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_handleFocusChange);
+  }
+
+  void _handleFocusChange() {
+    setState(() {
+      _isFocused = _focusNode.hasFocus;
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.removeListener(_handleFocusChange);
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: widget.semanticLabel,
+      hint: widget.semanticHint,
+      button: true,
+      container: true,
+      child: Container(
+        margin: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: _isFocused ? AppColors.focusColor : Colors.transparent,
+            width: 2,
+          ),
+        ),
+        child: Material(
+          color: Colors.transparent,
+          shape: const CircleBorder(),
+          child: InkWell(
+            focusNode: _focusNode,
+            onTap: widget.onPressed,
+            customBorder: const CircleBorder(),
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: widget.icon,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

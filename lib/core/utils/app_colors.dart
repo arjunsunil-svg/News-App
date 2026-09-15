@@ -18,5 +18,9 @@ abstract final class AppColors {
   static const Color bookmarkActive = accent;
   static const Color bookmarkInactive = Color(0xFFB8A896);
 
+  // static const Color divider = Color(0xFFE5E7EB);
+  // static const Color error = Color(0xFFD32F2F);
+  static const Color focusColor = Color(0xFF1A73E8);
+
   static const Color shadow = Color(0x1A2B1B12); // brown-tinted shadow, not black
 }

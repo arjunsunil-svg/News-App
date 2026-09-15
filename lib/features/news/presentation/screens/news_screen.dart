@@ -18,11 +18,13 @@ class NewsScreen extends GetView<NewsController> {
       appBar: AppBar(
         title: const Text(AppStrings.appTitle),
         actions: [
-          IconButton(
+          _FocusableIconButton(
+            icon: const Icon(Icons.bookmark),
             onPressed: () {
               Get.toNamed(AppRoutes.bookmarks);
             },
-            icon: const Icon(Icons.bookmark),
+            semanticLabel: AppStrings.bookmarksNavSemanticLabel,
+            semanticHint: AppStrings.bookmarksNavSemanticHint,
           ),
         ],
       ),
@@ -35,33 +37,39 @@ class NewsScreen extends GetView<NewsController> {
               16,
               10,
             ),
-            child: TextField(
-              onChanged: controller.search,
-              style: const TextStyle(color: AppColors.textPrimary),
-              cursorColor: AppColors.primary,
-              decoration: InputDecoration(
-                hintText: AppStrings.searchHint,
-                hintStyle: const TextStyle(color: AppColors.textSecondary),
-                prefixIcon: const Icon(
-                  Icons.search,
-                  color: AppColors.accent,
-                ),
-                filled: true,
-                fillColor: AppColors.surface,
-                contentPadding: const EdgeInsets.symmetric(vertical: 14),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: const BorderSide(color: AppColors.divider),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: const BorderSide(color: AppColors.divider),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: const BorderSide(
-                    color: AppColors.primary,
-                    width: 1.5,
+            child: Semantics(
+              label: AppStrings.searchFieldSemanticLabel,
+              hint: AppStrings.searchFieldSemanticHint,
+              textField: true,
+              excludeSemantics: true,
+              child: TextField(
+                onChanged: controller.search,
+                style: const TextStyle(color: AppColors.textPrimary),
+                cursorColor: AppColors.primary,
+                decoration: InputDecoration(
+                  hintText: AppStrings.searchHint,
+                  hintStyle: const TextStyle(color: AppColors.textSecondary),
+                  prefixIcon: const Icon(
+                    Icons.search,
+                    color: AppColors.accent,
+                  ),
+                  filled: true,
+                  fillColor: AppColors.surface,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                    borderSide: const BorderSide(color: AppColors.divider),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                    borderSide: const BorderSide(color: AppColors.divider),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                    borderSide: const BorderSide(
+                      color: AppColors.focusColor,
+                      width: 1.5,
+                    ),
                   ),
                 ),
               ),
@@ -83,26 +91,10 @@ class NewsScreen extends GetView<NewsController> {
                     final category = categories[index];
                     final isSelected = category == selected;
 
-                    return ChoiceChip(
-                      label: Text(category),
-                      selected: isSelected,
-                      onSelected: (_) => controller.selectCategory(category),
-                      showCheckmark: false,
-                      labelStyle: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: isSelected
-                            ? AppColors.surface
-                            : AppColors.textPrimary,
-                      ),
-                      backgroundColor: AppColors.surface,
-                      selectedColor: AppColors.primary,
-                      side: BorderSide(
-                        color: isSelected
-                            ? AppColors.primary
-                            : AppColors.divider,
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                    return _CategoryChip(
+                      label: category,
+                      isSelected: isSelected,
+                      onSelected: () => controller.selectCategory(category),
                     );
                   },
                 );
@@ -192,6 +184,156 @@ class NewsScreen extends GetView<NewsController> {
             }),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _CategoryChip extends StatefulWidget {
+  const _CategoryChip({
+    required this.label,
+    required this.isSelected,
+    required this.onSelected,
+  });
+
+  final String label;
+  final bool isSelected;
+  final VoidCallback onSelected;
+
+  @override
+  State<_CategoryChip> createState() => _CategoryChipState();
+}
+
+class _CategoryChipState extends State<_CategoryChip> {
+  final FocusNode _focusNode = FocusNode(debugLabel: 'CategoryChipFocusNode');
+
+  bool _isFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_handleFocusChange);
+  }
+
+  void _handleFocusChange() {
+    setState(() {
+      _isFocused = _focusNode.hasFocus;
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.removeListener(_handleFocusChange);
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: widget.label,
+      hint: AppStrings.categoryChipSemanticHint,
+      selected: widget.isSelected,
+      button: true,
+      container: true,
+      excludeSemantics: true,
+      child: ChoiceChip(
+        focusNode: _focusNode,
+        label: Text(widget.label),
+        selected: widget.isSelected,
+        onSelected: (_) => widget.onSelected(),
+        showCheckmark: false,
+        labelStyle: TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+          color:
+          widget.isSelected ? AppColors.surface : AppColors.textPrimary,
+        ),
+        backgroundColor: AppColors.surface,
+        selectedColor: AppColors.primary,
+        side: BorderSide(
+          color: _isFocused
+              ? AppColors.focusColor
+              : (widget.isSelected ? AppColors.primary : AppColors.divider),
+          width: _isFocused ? 2 : 1,
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+      ),
+    );
+  }
+}
+
+class _FocusableIconButton extends StatefulWidget {
+  const _FocusableIconButton({
+    required this.icon,
+    required this.onPressed,
+    required this.semanticLabel,
+    required this.semanticHint,
+  });
+
+  final Widget icon;
+  final VoidCallback onPressed;
+  final String semanticLabel;
+  final String semanticHint;
+
+  @override
+  State<_FocusableIconButton> createState() => _FocusableIconButtonState();
+}
+
+class _FocusableIconButtonState extends State<_FocusableIconButton> {
+  final FocusNode _focusNode =
+  FocusNode(debugLabel: 'FocusableIconButtonFocusNode');
+
+  bool _isFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_handleFocusChange);
+  }
+
+  void _handleFocusChange() {
+    setState(() {
+      _isFocused = _focusNode.hasFocus;
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.removeListener(_handleFocusChange);
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: widget.semanticLabel,
+      hint: widget.semanticHint,
+      button: true,
+      container: true,
+      child: Container(
+        margin: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: _isFocused ? AppColors.focusColor : Colors.transparent,
+            width: 2,
+          ),
+        ),
+        child: Material(
+          color: Colors.transparent,
+          shape: const CircleBorder(),
+          child: InkWell(
+            focusNode: _focusNode,
+            onTap: widget.onPressed,
+            customBorder: const CircleBorder(),
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: widget.icon,
+            ),
+          ),
+        ),
       ),
     );
   }
