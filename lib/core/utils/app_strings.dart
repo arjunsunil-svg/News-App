@@ -57,4 +57,36 @@ abstract final class AppStrings {
 
   static const String categoryChipSemanticHint =
       'Double tap to filter articles by this category';
+
+  static const String createPostTitle = 'Create Post';
+
+  static const String createPostNavSemanticLabel = 'Create post';
+
+  static const String createPostNavSemanticHint =
+      'Double tap to create a new post';
+
+  static const String postTitleFieldSemanticLabel = 'Post title';
+
+  static const String postTitleFieldSemanticHint =
+      'Double tap to enter the post title';
+
+  static const String postTitleHint = 'Enter title';
+
+  static const String postBodyFieldSemanticLabel = 'Post body';
+
+  static const String postBodyFieldSemanticHint =
+      'Double tap to enter the post body';
+
+  static const String postBodyHint = 'Enter body';
+
+  static const String submitPost = 'Submit';
+
+  static const String postCreatedSuccess = 'Post created successfully';
+
+  static const String postCreationError = 'Failed to create post';
+
+  static const String postIdLabel = 'ID';
+
+  static const String submitPostSemanticHint =
+      'Double tap to submit the post';
 }

@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
+import 'graphql_executor.dart';
+
 import 'graphql_queries.dart';
 
-class GraphQLJsonExecutor {
+class GraphQLJsonExecutor implements GraphQLExecutor{
   GraphQLJsonExecutor._();
 
   static final GraphQLJsonExecutor instance =  GraphQLJsonExecutor._();
@@ -32,6 +34,7 @@ class GraphQLJsonExecutor {
         .toList();
   }
 
+  @override
   Future<Map<String, dynamic>> execute(
       String document,
       Map<String, dynamic> variables,

@@ -19,6 +19,14 @@ class NewsScreen extends GetView<NewsController> {
         title: const Text(AppStrings.appTitle),
         actions: [
           _FocusableIconButton(
+            icon: const Icon(Icons.add_circle_outline),
+            onPressed: () {
+              Get.toNamed(AppRoutes.createPost);
+            },
+            semanticLabel: AppStrings.createPostNavSemanticLabel,
+            semanticHint: AppStrings.createPostNavSemanticHint,
+          ),
+          _FocusableIconButton(
             icon: const Icon(Icons.bookmark),
             onPressed: () {
               Get.toNamed(AppRoutes.bookmarks);
